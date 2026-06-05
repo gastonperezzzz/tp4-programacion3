@@ -122,7 +122,11 @@ public class TransactionProcessor {
     // Recorrer transacciones elemento por elemento comparando el id.
     // Retornar null si no se encuentra.
     public Transaction buscarPorId(long id) {
-        // TODO: Implementar
+        for(int i = 0; i < transacciones.size(); i++) {
+            if(transacciones.get(i).id == id) {
+                return transacciones.get(i);
+            }
+        }
         return null;
     }
 
