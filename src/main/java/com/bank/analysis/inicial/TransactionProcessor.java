@@ -130,6 +130,8 @@ public class TransactionProcessor {
         return null;
     }
 
+    //ESTA PARTE REALIZO YO: CORZO
+    
     /**
      * Busca transacciones cuyo monto esté dentro del rango especificado [min, max].
      * Los estudiantes deben implementar este método.
@@ -141,9 +143,24 @@ public class TransactionProcessor {
     // TODO: Implementar búsqueda por rango de monto.
     // Recorrer la lista y agregar las transacciones que cumplan:
     // mnt >= montoMin && mnt <= montoMax
+    
     public List<Transaction> buscarPorMonto(double montoMin, double montoMax) {
         // TODO: Implementar
-        return null;
+        
+        //1.Creamos la lista resultado la cual acumula las coincidencias
+        List<Transaction>resultado = new ArrayList<>();
+
+        //2.Recorremos linealmente la lista de transacciones
+        for (Transaction t : this.transacciones) {
+            
+            //3.Verificamos si el monto (mnt) cumple con el rango inclusivo
+            if(t.mnt >= montoMin && t.mnt <= montoMax){
+                resultado.add(t);   //Lo agregamos al resultado
+            }
+        }
+        
+        //4.Devolvemos la lista filtrada
+        return resultado;
     }
 
     /**
