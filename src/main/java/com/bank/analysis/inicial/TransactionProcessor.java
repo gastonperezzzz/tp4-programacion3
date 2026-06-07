@@ -223,8 +223,33 @@ public class TransactionProcessor {
     // Si ascendente es false, ordenar de mayor a menor.
     // Retornar la lista ordenada (no modificar la original directamente).
     public List<Transaction> ordenarManual(boolean ascendente) {
-        // TODO: Implementar Bubble Sort por monto
-        return null;
+        int n = transacciones.size();
+        List<Transaction> listaOrdenada = new ArrayList<>(transacciones);
+
+        if (ascendente) {
+            for (int i = 0; i < n - 1; i++) {
+                for (int j = 0; j < n - i - 1; j++) {
+                    if (listaOrdenada.get(j).mnt > listaOrdenada.get(j + 1).mnt) {
+                        // Intercambiar
+                        Transaction temp = listaOrdenada.get(j);
+                        listaOrdenada.set(j, listaOrdenada.get(j + 1));
+                        listaOrdenada.set(j + 1, temp);
+                    }
+                }
+            }
+        } else { // Caso que se solicite ordenarlo descendentemente
+            for (int i = 0; i < n - 1; i++) {
+                for (int j = 0; j < n - i - 1; j++) {
+                    if (listaOrdenada.get(j).mnt < listaOrdenada.get(j + 1).mnt) {
+                        // Intercambiar
+                        Transaction temp = listaOrdenada.get(j);
+                        listaOrdenada.set(j, listaOrdenada.get(j + 1));
+                        listaOrdenada.set(j + 1, temp);
+                    }
+                }
+            }
+        }
+        return listaOrdenada;
     }
 
     /**
