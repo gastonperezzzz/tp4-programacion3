@@ -202,11 +202,20 @@ public class TransactionProcessor {
     // Usar Comparator.comparingDouble(t -> t.mnt) para comparar por monto.
     // Si ascendente es false, usar .reversed() en el comparador.
     // Llamar a list.sort(comparator) y retornar la lista.
+    
     public List<Transaction> ordenarBuiltIn(boolean ascendente) {
-        // TODO: Implementar ordenamiento con sort() incorporado
-        return null;
+    List<Transaction> copia = new ArrayList<>(transacciones); //copia de la lista de transacciones
+    
+    Comparator<Transaction> comparador = Comparator.comparingDouble(t -> t.mnt);
+    
+        if (!ascendente) {
+        comparador = comparador.reversed();
+        }
+    copia.sort(comparador);
+    
+    return copia;
     }
-
+    
     /**
      * Filtro avanzado que combina múltiples criterios.
      * <p>
