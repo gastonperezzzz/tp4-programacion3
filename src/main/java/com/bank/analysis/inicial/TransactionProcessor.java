@@ -1,9 +1,11 @@
 package com.bank.analysis.inicial;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
@@ -128,6 +130,28 @@ public class TransactionProcessor {
             }
         }
         return null;
+    }
+
+    // Definicion de metodo de ordenamiento (necesario para realizar busqueda binaria)
+    public List<Transaction> ordenarLista() {
+        if(transacciones.isEmpty()) {
+            System.out.println("Error: lista vacia. No se puede aplicar ordenamiento");
+        }
+        else {
+            return transacciones.stream()
+                    .sorted(Comparator.comparingLong(t -> t.id))
+                    .collect(Collectors.toList());
+        }
+        return null;
+    }
+
+    // Definicion del metodo buscarPorIdBinario | Complejidad: O(log n)
+    public Transaction buscarPorIdBinario(List<Transaction> orderedTransactions, long id) {
+        int index = Collections.binarySearch(orderedTransactions, null, Comparator.comparingLong(t -> t.id));
+        if(index <= 0) {
+            return null;
+        }
+        return transacciones.get(index);
     }
 
     /**
