@@ -1,9 +1,11 @@
 package com.bank.analysis.inicial;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
@@ -130,7 +132,7 @@ public class TransactionProcessor {
         return null;
     }
 
-    //ESTA PARTE REALIZO YO: CORZO
+    
     
     /**
      * Busca transacciones cuyo monto esté dentro del rango especificado [min, max].
@@ -158,7 +160,7 @@ public class TransactionProcessor {
                 resultado.add(t);   //Lo agregamos al resultado
             }
         }
-        
+
         //4.Devolvemos la lista filtrada
         return resultado;
     }
