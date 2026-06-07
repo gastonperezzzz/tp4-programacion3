@@ -1,9 +1,11 @@
 package com.bank.analysis.inicial;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
@@ -130,6 +132,28 @@ public class TransactionProcessor {
         return null;
     }
 
+    // Definicion de metodo de ordenamiento (necesario para realizar busqueda binaria)
+    public List<Transaction> ordenarLista() {
+        if(transacciones.isEmpty()) {
+            System.out.println("Error: lista vacia. No se puede aplicar ordenamiento");
+        }
+        else {
+            return transacciones.stream()
+                    .sorted(Comparator.comparingLong(t -> t.id))
+                    .collect(Collectors.toList());
+        }
+        return null;
+    }
+
+    // Definicion del metodo buscarPorIdBinario | Complejidad: O(log n)
+    public Transaction buscarPorIdBinario(List<Transaction> orderedTransactions, long id) {
+        int index = Collections.binarySearch(orderedTransactions, null, Comparator.comparingLong(t -> t.id));
+        if(index <= 0) {
+            return null;
+        }
+        return transacciones.get(index);
+    }
+    
     /**
      * Busca transacciones cuyo monto esté dentro del rango especificado [min, max].
      * Los estudiantes deben implementar este método.
@@ -141,9 +165,24 @@ public class TransactionProcessor {
     // TODO: Implementar búsqueda por rango de monto.
     // Recorrer la lista y agregar las transacciones que cumplan:
     // mnt >= montoMin && mnt <= montoMax
+    
     public List<Transaction> buscarPorMonto(double montoMin, double montoMax) {
         // TODO: Implementar
-        return null;
+        
+        //1.Creamos la lista resultado la cual acumula las coincidencias
+        List<Transaction>resultado = new ArrayList<>();
+
+        //2.Recorremos linealmente la lista de transacciones
+        for (Transaction t : this.transacciones) {
+            
+            //3.Verificamos si el monto (mnt) cumple con el rango inclusivo
+            if(t.mnt >= montoMin && t.mnt <= montoMax){
+                resultado.add(t);   //Lo agregamos al resultado
+            }
+        }
+
+        //4.Devolvemos la lista filtrada
+        return resultado;
     }
 
     /**
@@ -184,8 +223,33 @@ public class TransactionProcessor {
     // Si ascendente es false, ordenar de mayor a menor.
     // Retornar la lista ordenada (no modificar la original directamente).
     public List<Transaction> ordenarManual(boolean ascendente) {
-        // TODO: Implementar Bubble Sort por monto
-        return null;
+        int n = transacciones.size();
+        List<Transaction> listaOrdenada = new ArrayList<>(transacciones);
+
+        if (ascendente) {
+            for (int i = 0; i < n - 1; i++) {
+                for (int j = 0; j < n - i - 1; j++) {
+                    if (listaOrdenada.get(j).mnt > listaOrdenada.get(j + 1).mnt) {
+                        // Intercambiar
+                        Transaction temp = listaOrdenada.get(j);
+                        listaOrdenada.set(j, listaOrdenada.get(j + 1));
+                        listaOrdenada.set(j + 1, temp);
+                    }
+                }
+            }
+        } else { // Caso que se solicite ordenarlo descendentemente
+            for (int i = 0; i < n - 1; i++) {
+                for (int j = 0; j < n - i - 1; j++) {
+                    if (listaOrdenada.get(j).mnt < listaOrdenada.get(j + 1).mnt) {
+                        // Intercambiar
+                        Transaction temp = listaOrdenada.get(j);
+                        listaOrdenada.set(j, listaOrdenada.get(j + 1));
+                        listaOrdenada.set(j + 1, temp);
+                    }
+                }
+            }
+        }
+        return listaOrdenada;
     }
 
     /**
