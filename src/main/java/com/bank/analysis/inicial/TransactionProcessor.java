@@ -223,6 +223,10 @@ public class TransactionProcessor {
     // Si ascendente es false, ordenar de mayor a menor.
     // Retornar la lista ordenada (no modificar la original directamente).
     public List<Transaction> ordenarManual(boolean ascendente) {
+        /* 
+
+        METODO DE ORDENAMIENTO MANUAL CON BUBBLE SORT (COMPLEJIDAD O(n^2))
+
         int n = transacciones.size();
         List<Transaction> listaOrdenada = new ArrayList<>(transacciones);
 
@@ -245,6 +249,36 @@ public class TransactionProcessor {
                         Transaction temp = listaOrdenada.get(j);
                         listaOrdenada.set(j, listaOrdenada.get(j + 1));
                         listaOrdenada.set(j + 1, temp);
+                    }
+                }
+            }
+        }
+        */
+
+        if (transacciones.isEmpty()) {
+            System.out.println("La lista está vacia.");
+            return null;
+        }
+
+        List<Transaction> listaOrdenada = new ArrayList<>(transacciones); // Copia de la lista original para no modificarla
+
+        if (ascendente) {
+            for (int i = 0; i < listaOrdenada.size(); i++) {
+                for (int j = 0; j < listaOrdenada.size(); j++) {
+                    if (listaOrdenada.get(i).mnt > listaOrdenada.get(j).mnt) {
+                        Transaction temp = listaOrdenada.get(i);
+                        listaOrdenada.set(i, listaOrdenada.get(j));
+                        listaOrdenada.set(j, temp);
+                    }
+                }
+            }
+        } else {
+            for (int i = 0; i < listaOrdenada.size(); i++) {
+                for (int j = 0; j < listaOrdenada.size(); j++) {
+                    if (listaOrdenada.get(i).mnt < listaOrdenada.get(j).mnt) {
+                        Transaction temp = listaOrdenada.get(i);
+                        listaOrdenada.set(i, listaOrdenada.get(j));
+                        listaOrdenada.set(j, temp);
                     }
                 }
             }

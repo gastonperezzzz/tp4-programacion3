@@ -32,6 +32,9 @@ public class Main {
         System.out.println("Total de transacciones en memoria: " + procesador.getTransacciones().size());
         System.out.println();
 
+        long inicioTime;
+        long finTime;
+
         // --- Búsqueda por ID ---
         System.out.println("=== BÚSQUEDA POR ID ===");
         Transaction encontrada = procesador.buscarPorId(1005);
@@ -56,7 +59,27 @@ public class Main {
         System.out.println("Total de RETIROS: " + retiros.size());
         System.out.println();
 
-        // --- Ordenamiento ---
+        // --- Ordenamiento manual ---
+
+        inicioTime = System.nanoTime();
+
+        System.out.println("=== ORDENAMIENTO MANUAL POR MONTO ===");
+        List<Transaction> ordenadasManual = procesador.ordenarManual(true); // ascendente
+        if (ordenadasManual != null && !ordenadasManual.isEmpty()) {
+            System.out.println("Menor monto: " + ordenadasManual.get(0));
+            System.out.println("Mayor monto: " + ordenadasManual.get(ordenadasManual.size() - 1));
+        } else {
+            System.out.println("Método no implementado aún.");
+        }
+        
+        finTime = System.nanoTime();
+
+        long OrdenamientoManualTime = finTime - inicioTime;
+
+        System.out.println("Tiempo de ejecución (manual): " + OrdenamientoManualTime + " ns");
+        System.out.println();
+        
+        // --- Ordenamiento BUILT-IN ---
         System.out.println("=== ORDENAMIENTO BUILT-IN POR MONTO ===");
         List<Transaction> ordenadas = procesador.ordenarBuiltIn(false); // descendente
         if (ordenadas != null && !ordenadas.isEmpty()) {
